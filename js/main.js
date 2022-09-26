@@ -91,40 +91,27 @@ class DocumentoDetalle{
 
 let productos = [new Producto(1, 'Microfono', 25000, 21), new Producto(2, 'Monitor', 80000, 0), new Producto(3, 'Mouse', 20000, 21), new Producto(4, 'Parlantes', 50000, 27), new Producto(5, 'Teclado', 30000, 10.5)];
 
-// MODIFICAR ACÁ CON LO QUE LEVANTA DEL HTML
+// PASAR CLIENTE A DROPDOWN?
 const validarCliente = () => {
-    while(inputCuit < 100000000 && inputCuit > 99999999999){
-        inputCuit = prompt('El CUIT ingresado es incorrecto. El mismo debe ser mayor o igual a 100000000 y menor o igual a 99999999999');
-    }  
-    return inputCuit;
+    let cliente = clientElement.value;
+    let msgError = '';
+
+    if (cliente < 100000000 && cliente > 99999999999) msgError = 'El CUIT ingresado es incorrecto. El mismo debe ser mayor o igual a 100000000 y menor o igual a 99999999999';  
+    return msgError;
 }
 
-// MODIFICAR ACÁ CON LO QUE LEVANTA DEL HTML
-const validarInputTipoDocumento = (inputTipoDocumento) => {
-    let tipoDocumento;
+const validarTipoDocumento = (msgError) => {
+    let tipoDocumento = tipoDocumentoElement.getValue();
 
-    while(!(inputTipoDocumento == '1' || inputTipoDocumento == '2' || inputTipoDocumento == '3')){
-        inputTipoDocumento = prompt('Opción inválida. Ingrese:\n1 - Factura.\n2 - Nota de Crédito.\n3 - Nota de Débito.');
-    }  
-    if (inputTipoDocumento == '1') tipoDocumento = 'Factura';
-    if (inputTipoDocumento == '2') tipoDocumento = 'Nota de Crédito';
-    if (inputTipoDocumento == '3') tipoDocumento = 'Nota de Débito';
-    return tipoDocumento;
+    if(tipoDocumento == '' ) msgError = 'Seleccione Tipo de Documento';
+    return msgError;
 }
 
-// MODIFICAR ACÁ CON LO QUE LEVANTA DEL HTML
-const validarInputCentroEmisor = (inputCentroEmisor) => {
-    let centroEmisor;
+const validarCentroEmisor = (msgError) => {
+    let centroEmisor = centroEmisorElement.getValue();
 
-    while(!(inputCentroEmisor == '1' || inputCentroEmisor == '2' || inputCentroEmisor == '3' || inputCentroEmisor == '4' || inputCentroEmisor == '5')){
-        inputCentroEmisor = prompt('Opción inválida. Ingrese:\n1 - 00001.\n2 - 00002.\n3 - 00003.\n4 - 00004.\n5 - 00005.');
-    }  
-    if (inputCentroEmisor == '1') centroEmisor = '00001';
-    if (inputCentroEmisor == '2') centroEmisor = '00002';
-    if (inputCentroEmisor == '3') centroEmisor = '00003';
-    if (inputCentroEmisor == '4') centroEmisor = '00004';
-    if (inputCentroEmisor == '5') centroEmisor = '00005';
-    return centroEmisor;
+    if (centroEmisor == '') msgError = 'Seleccione Centro Emisor';
+    return msgError;
 }
 
 const validarInputs = () => {
