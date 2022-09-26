@@ -1,3 +1,35 @@
+const clientElement = document.getElementById("cliente");
+const tipoDocumentoElement = document.getElementById("tipoDocumento");
+const centroEmisorElement = document.getElementById("centroEmisor");
+const numeroElement = document.getElementById("numero");
+const cantidad1Element = document.getElementById("cantidad1");
+const producto1Element = document.getElementById("producto1");
+const precio1Element = document.getElementById("precio1");
+const impuesto1Element = document.getElementById("impuesto1");
+const subtotal1Element = document.getElementById("subtotal1");
+const cantidad2Element = document.getElementById("cantidad2");
+const producto2Element = document.getElementById("producto2");
+const precio2Element = document.getElementById("precio2");
+const impuesto2Element = document.getElementById("impuesto2");
+const subtotal2Element = document.getElementById("subtotal2");
+const cantidad3Element = document.getElementById("cantidad3");
+const producto3Element = document.getElementById("producto3");
+const precio3Element = document.getElementById("precio3");
+const impuesto3Element = document.getElementById("impuesto3");
+const subtotal3Element = document.getElementById("subtotal3");
+const cantidad4Element = document.getElementById("cantidad4");
+const producto4Element = document.getElementById("producto4");
+const precio4Element = document.getElementById("precio4");
+const impuesto4Element = document.getElementById("impuesto4");
+const subtotal4Element = document.getElementById("subtotal4");
+const cantidad5Element = document.getElementById("cantidad5");
+const producto5Element = document.getElementById("producto5");
+const precio5Element = document.getElementById("precio5");
+const impuesto5Element = document.getElementById("impuesto5");
+const subtotal5Element = document.getElementById("subtotal5");
+const totalElement = document.getElementById("total");
+const confirmarElement = document.getElementById("confirmar");
+
 let listaDocumentos = [];
 let numeradorFactura = 0;
 let numeradorNotaDeCredito = 0;
@@ -59,18 +91,62 @@ class DocumentoDetalle{
 
 let productos = [new Producto(1, 'Microfono', 25000, 21), new Producto(2, 'Monitor', 80000, 0), new Producto(3, 'Mouse', 20000, 21), new Producto(4, 'Parlantes', 50000, 27), new Producto(5, 'Teclado', 30000, 10.5)];
 
-const gestionarMenu = () => {
-    inputOpcionMenu = prompt('Bienvenido a Coder Facturación! Ingrese:\n1 - Para crear un Documento.\n2 - Para mostrar los Documentos creados.\n3 - Para salir.');
-    opcionMenu = validarInputMenu(inputOpcionMenu);
-    return opcionMenu;
+// MODIFICAR ACÁ CON LO QUE LEVANTA DEL HTML
+const validarCliente = () => {
+    while(inputCuit < 100000000 && inputCuit > 99999999999){
+        inputCuit = prompt('El CUIT ingresado es incorrecto. El mismo debe ser mayor o igual a 100000000 y menor o igual a 99999999999');
+    }  
+    return inputCuit;
 }
 
-const validarInputMenu = (inputOpcionMenu) => {
-    while(!(inputOpcionMenu == '1' || inputOpcionMenu == '2' || inputOpcionMenu == '3')){
-        inputOpcionMenu = prompt('Opción inválida. Ingrese:\n1 - Para crear un Documento.\n2 - Para mostrar los Documentos creados.\n3 - Para salir.');
-    }
-    return inputOpcionMenu;
+// MODIFICAR ACÁ CON LO QUE LEVANTA DEL HTML
+const validarInputTipoDocumento = (inputTipoDocumento) => {
+    let tipoDocumento;
+
+    while(!(inputTipoDocumento == '1' || inputTipoDocumento == '2' || inputTipoDocumento == '3')){
+        inputTipoDocumento = prompt('Opción inválida. Ingrese:\n1 - Factura.\n2 - Nota de Crédito.\n3 - Nota de Débito.');
+    }  
+    if (inputTipoDocumento == '1') tipoDocumento = 'Factura';
+    if (inputTipoDocumento == '2') tipoDocumento = 'Nota de Crédito';
+    if (inputTipoDocumento == '3') tipoDocumento = 'Nota de Débito';
+    return tipoDocumento;
 }
+
+// MODIFICAR ACÁ CON LO QUE LEVANTA DEL HTML
+const validarInputCentroEmisor = (inputCentroEmisor) => {
+    let centroEmisor;
+
+    while(!(inputCentroEmisor == '1' || inputCentroEmisor == '2' || inputCentroEmisor == '3' || inputCentroEmisor == '4' || inputCentroEmisor == '5')){
+        inputCentroEmisor = prompt('Opción inválida. Ingrese:\n1 - 00001.\n2 - 00002.\n3 - 00003.\n4 - 00004.\n5 - 00005.');
+    }  
+    if (inputCentroEmisor == '1') centroEmisor = '00001';
+    if (inputCentroEmisor == '2') centroEmisor = '00002';
+    if (inputCentroEmisor == '3') centroEmisor = '00003';
+    if (inputCentroEmisor == '4') centroEmisor = '00004';
+    if (inputCentroEmisor == '5') centroEmisor = '00005';
+    return centroEmisor;
+}
+
+const validarInputs = () => {
+    let msgError = '';
+
+    msgError = validarCliente();
+    msgError = validarTipoDocumento(msgError);
+    msgError = validarCentroEmisor(msgError);
+    msgError = validarDetalle(msgError);
+}
+
+
+const gestionarCreacionDocumento = () => {
+    let msgError = '';
+
+    msgError = validarInputs();
+    msgError == ''? crearDocumento() : mostrarError(msgError);
+}
+
+confirmarElement.addEventListener("click", gestionarCreacionDocumento);
+
+/*
 
 const crearDocumento = () => {    
     let cuit;
@@ -250,4 +326,4 @@ while (iterador){
     if (opcionMenu == 1) crearDocumento();
     if (opcionMenu == 2) mostrarListaDocumentos();
     if (opcionMenu == 3) iterador = false;
-}
+}*/
