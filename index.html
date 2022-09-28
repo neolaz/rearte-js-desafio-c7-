@@ -29,13 +29,20 @@
     </header>
 	<main class="contacto containerCustom">
         <h1>Generar Documentos</h1>
-        <form action="envio.php">
+        <form action="">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-3 offset-md-1">
                         <div class="containerInput">
                             <label class="textGeneric" for="cliente">Cliente</label>
-                            <input class="textGeneric" type="number" id="cliente" placeholder="Ingrese CUIT" >
+                            <select name="cliente" id="cliente" >
+                                <option value="">Seleccione</option>
+                                <option value="Cliente1">Cliente1</option>
+                                <option value="Cliente2">Cliente2</option>
+                                <option value="Cliente3">Cliente3</option>
+                                <option value="Cliente4">Cliente4</option>
+                                <option value="Cliente5">Cliente5</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-xl-3">
@@ -65,13 +72,8 @@
                     <div class="col-xl-2">
                         <div class="containerInput">
                             <label class="textGeneric" for="numero">Número</label>
-                            <input class="textGeneric" type="number" id="numero" readonly>
+                            <p class="textGeneric inputNumber" id="numero">00000000</p>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-10 offset-md-1">
-                        <hr>
                     </div>
                 </div>
                 <div class="row">
@@ -104,195 +106,233 @@
                 <div class="row">
                     <div class="col-xl-2 offset-md-1">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="cantidad1" placeholder="Cantidad">
+                            <input class="textGeneric inputNumber" type="text" id="cantidad1" placeholder="Cantidad" value="0">
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="containerInput">
                             <select name="producto1" id="producto1">
                                 <option value="">Seleccione</option>
-                                <option value="microfono">Micrófono</option>
-                                <option value="monitor">Monitor</option>
-                                <option value="mouse">Mouse</option>
-                                <option value="parlantes">Parlantes</option>
-                                <option value="teclado">Teclado</option>
+                                <option value="1">Micrófono</option>
+                                <option value="2">Monitor</option>
+                                <option value="3">Mouse</option>
+                                <option value="4">Parlantes</option>
+                                <option value="5">Teclado</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="precio1" placeholder="Precio" readonly>
+                            <p class="textGeneric inputNumber" id="precio1">0</p>
                         </div>
                     </div>
                     <div class="col-xl-1">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="impuesto1" placeholder="Impuesto" readonly>
+                            <p class="textGeneric inputNumber" id="impuesto1">0</p>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="subtotal1" placeholder="Subtotal" readonly>
+                            <p class="textGeneric inputNumber" id="subtotal1">0</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xl-2 offset-md-1">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="cantidad2" placeholder="Cantidad">
+                            <input class="textGeneric inputNumber" type="text" id="cantidad2" placeholder="Cantidad" value="0">
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="containerInput">
                             <select name="producto2" id="producto2">
                                 <option value="">Seleccione</option>
-                                <option value="microfono">Micrófono</option>
-                                <option value="monitor">Monitor</option>
-                                <option value="mouse">Mouse</option>
-                                <option value="parlantes">Parlantes</option>
-                                <option value="teclado">Teclado</option>
+                                <option value="1">Micrófono</option>
+                                <option value="2">Monitor</option>
+                                <option value="3">Mouse</option>
+                                <option value="4">Parlantes</option>
+                                <option value="5">Teclado</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="precio2" placeholder="Precio" readonly>
+                            <p class="textGeneric inputNumber" id="precio2">0</p>
                         </div>
                     </div>
                     <div class="col-xl-1">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="impuesto2" placeholder="Impuesto" readonly>
+                            <p class="textGeneric inputNumber" id="impuesto2">0</p>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="subtotal1" placeholder="Subtotal" readonly>
+                            <p class="textGeneric inputNumber" id="subtotal2">0</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xl-2 offset-md-1">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="cantidad3" placeholder="Cantidad">
+                            <input class="textGeneric inputNumber" type="text" id="cantidad3" placeholder="Cantidad" value="0">
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="containerInput">
                             <select name="producto3" id="producto3">
                                 <option value="">Seleccione</option>
-                                <option value="microfono">Micrófono</option>
-                                <option value="monitor">Monitor</option>
-                                <option value="mouse">Mouse</option>
-                                <option value="parlantes">Parlantes</option>
-                                <option value="teclado">Teclado</option>
+                                <option value="1">Micrófono</option>
+                                <option value="2">Monitor</option>
+                                <option value="3">Mouse</option>
+                                <option value="4">Parlantes</option>
+                                <option value="5">Teclado</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="precio3" placeholder="Precio" readonly>
+                            <p class="textGeneric inputNumber" id="precio3">0</p>
                         </div>
                     </div>
                     <div class="col-xl-1">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="impuesto3" placeholder="Impuesto" readonly>
+                            <p class="textGeneric inputNumber" id="impuesto3">0</p>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="subtotal1" placeholder="Subtotal" readonly>
+                            <p class="textGeneric inputNumber" id="subtotal3">0</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xl-2 offset-md-1">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="cantidad4" placeholder="Cantidad">
+                            <input class="textGeneric inputNumber" type="text" id="cantidad4" placeholder="Cantidad" value="0">
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="containerInput">
                             <select name="producto4" id="producto4">
                                 <option value="">Seleccione</option>
-                                <option value="microfono">Micrófono</option>
-                                <option value="monitor">Monitor</option>
-                                <option value="mouse">Mouse</option>
-                                <option value="parlantes">Parlantes</option>
-                                <option value="teclado">Teclado</option>
+                                <option value="1">Micrófono</option>
+                                <option value="2">Monitor</option>
+                                <option value="3">Mouse</option>
+                                <option value="4">Parlantes</option>
+                                <option value="5">Teclado</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="precio4" placeholder="Precio" readonly>
+                            <p class="textGeneric inputNumber" id="precio4">0</p>
                         </div>
                     </div>
                     <div class="col-xl-1">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="impuesto4" placeholder="Impuesto" readonly>
+                            <p class="textGeneric inputNumber" id="impuesto4">0</p>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="subtotal1" placeholder="Subtotal" readonly>
+                            <p class="textGeneric inputNumber" id="subtotal4">0</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xl-2 offset-md-1">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="cantidad5" placeholder="Cantidad">
+                            <input class="textGeneric inputNumber" type="text" id="cantidad5" placeholder="Cantidad" value="0">
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="containerInput">
                             <select name="producto5" id="producto5">
                                 <option value="">Seleccione</option>
-                                <option value="microfono">Micrófono</option>
-                                <option value="monitor">Monitor</option>
-                                <option value="mouse">Mouse</option>
-                                <option value="parlantes">Parlantes</option>
-                                <option value="teclado">Teclado</option>
+                                <option value="1">Micrófono</option>
+                                <option value="2">Monitor</option>
+                                <option value="3">Mouse</option>
+                                <option value="4">Parlantes</option>
+                                <option value="5">Teclado</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="precio5" placeholder="Precio" readonly>
+                            <p class="textGeneric inputNumber" id="precio5">0</p>
                         </div>
                     </div>
                     <div class="col-xl-1">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="impuesto5" placeholder="Impuesto" readonly>
+                            <p class="textGeneric inputNumber" id="impuesto5">0</p>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="containerInput">
-                            <input class="textGeneric" type="number" id="subtotal1" placeholder="Subtotal" readonly>
+                            <p class="textGeneric inputNumber" id="subtotal5">0</p>
                         </div>
                     </div>
                 </div>  
                 <div class="row">
-                    <div class="col-xl-10 offset-md-1">
-                        <hr>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-xl-2 offset-md-5">
                         <div class="containerInput flex">
                             <p class="textTotal">Total:</p>
-                            <p class="textTotal" id="total">$</p>
+                            <p class="textTotal" id="total">0</p>
                         </div>
                     </div>
                 </div>  
                 <div class="row">
                     <div class="col-xl-2 offset-md-5">
                         <div class="containerInput">
-                            <input class="textGeneric buttonGreen" type="submit" value="Confirmar" id="confirmar"> 
+                            <a id="confirmar">
+                                <p class="textGeneric buttonGreen">Cofirmar</p>
+                            </a>
                         </div>
                     </div>
                 </div>      
             </div>
         </form>
+        <div class="row">
+            <div class="col-xl-10 offset-md-1">
+                <hr>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <h2>Listado Documentos</h2>
+            <div class="listContainer">
+                <div>
+                    <div class="row">
+                        <div class="col-xl-2 offset-md-1">
+                            <div class="containerInput alignCenter">
+                                <span class="textGeneric" for="numero">Tipo Documento</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-2">
+                            <div class="containerInput alignCenter">
+                                <span class="textGeneric" for="producto">Centro Emisor</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-2">
+                            <div class="containerInput alignCenter">
+                                <span class="textGeneric" for="precio">Numero</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-2">
+                            <div class="containerInput alignCenter">
+                                <span class="textGeneric" for="impuesto">Cliente</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-2">
+                            <div class="containerInput alignCenter">
+                                <span class="textGeneric" for="subtotal">Total</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="documentoRow">
+                </div>
+            </div>
+        </div>
 	</main>
 	<footer class="bgHeaderFooter containerCustom">
     <a href="https://instagram.com/" target="_blank">

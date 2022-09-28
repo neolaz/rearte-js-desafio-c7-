@@ -62,13 +62,13 @@ body {
 }
 
 .brandLogo {
-  transition-timing-const: ease;
+  transition-timing-function: ease;
   transition: 0.4s;
 }
 .brandLogo:hover {
   opacity: 0.5;
   transform: scale(0.9);
-  transition-timing-const: ease;
+  transition-timing-function: ease;
   transition: 0.4s;
 }
 
@@ -82,13 +82,13 @@ body {
   width: 30px;
   height: 30px;
   margin-left: 10px;
-  transition-timing-const: ease;
+  transition-timing-function: ease;
   transition: 0.4s;
 }
 .imgSocialMedia:hover {
   opacity: 0.5;
   transform: scale(0.7);
-  transition-timing-const: ease;
+  transition-timing-function: ease;
   transition: 0.4s;
 }
 
@@ -98,6 +98,10 @@ body {
 
 .alignCenter{
   align-items: center;
+}
+
+.inputNumber{
+  text-align: right;
 }
 
 /* Header ---------------------------------------------*/
@@ -151,21 +155,16 @@ footer {
   display: flex;
   justify-content: flex-end;
 }
-
-/* Index ---------------------------------------------*/
-.index {
-  min-height: 87vh;
-}
-.index h1 {
-  margin-top: 20px;
-}
-
 /* Contacto ---------------------------------------------*/
 .contacto {
   background-color: #272727;
 }
 
 .contacto h1{
+  text-align: center;
+}
+
+.contacto h2{
   text-align: center;
 }
 
@@ -220,26 +219,35 @@ footer {
   width: 100%;
 }
 .contacto form .buttonGreen{
+  text-align: center;
   margin-top: 10px;
   background-color: #30fdb0;
   color: #272727;
   font-weight: bold;
   border: none;
-  transition-timing-const: ease;
+  transition-timing-function: ease;
   transition: 0.4s;
+  border-radius: 5px;
 }
 .contacto form .buttonGreen:hover {
   opacity: 0.5;
   transform: scale(0.98);
-  transition-timing-const: ease;
+  transition-timing-function: ease;
   transition: 0.4s;
 }
 
 .contacto form .flex .textTotal{
   font-size: 1.5em;
 } 
-
 .contacto form .flex .textTotal:first-child{
   color:#30fdb0;
   padding-right: 15px;
 } 
+.contacto .listContainer{
+  justify-content: center;
+  text-align: center;
+}
+.contacto .listContainer span{
+  color: #30fdb0;
+  padding: 10px 0;
+}

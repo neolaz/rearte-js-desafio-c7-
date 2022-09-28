@@ -29,6 +29,7 @@ const impuesto5Element = document.getElementById("impuesto5");
 const subtotal5Element = document.getElementById("subtotal5");
 const totalElement = document.getElementById("total");
 const confirmarElement = document.getElementById("confirmar");
+const documentoRowElement = document.getElementById("documentoRow");
 
 let listaDocumentos = [];
 let numeradorFactura = 0;
@@ -57,8 +58,8 @@ class Producto{
 }
 
 class Documento{
-    constructor (cuit, tipo, centroEmisor, numero, listaDocumentoDetalle){
-        this.cuit = cuit;
+    constructor (cliente, tipo, centroEmisor, numero, listaDocumentoDetalle){
+        this.cliente = cliente;
         this.tipo = tipo;
         this.centroEmisor = centroEmisor;
         this.numero = numero;
@@ -69,14 +70,14 @@ class Documento{
     mostrarDocumento(){
         let documentoStr;
 
-        documentoStr = `${this.tipo}, centro emisor ${this.centroEmisor}, número ${this.numero}, para ${this.cuit} por un total de $${this.total}. `;
+        documentoStr = `${this.tipo}, centro emisor ${this.centroEmisor}, número ${this.numero}, para ${this.cliente} por un total de $${this.total}. `;
         return documentoStr;
     }
 
     mostrarMensajeDocumentoCreado(){
         let mensajeDocumento;
 
-        mensajeDocumento = `Se creó correctamente la ${this.tipo}, centro emisor ${this.centroEmisor}, número ${this.numero}, para ${this.cuit} por un total de $${this.total}. La misma contiene los siguientes productos: `;
+        mensajeDocumento = `Se creó correctamente la ${this.tipo}, centro emisor ${this.centroEmisor}, número ${this.numero}, para ${this.cliente} por un total de $${this.total}. La misma contiene los siguientes productos: `;
         this.listaDocumentoDetalle.forEach( (det) => {  mensajeDocumento += `\n${det.cantidad} x ${det.producto.nombre} con un precio de $${det.producto.precio} c/u y un ${det.producto.impuesto}% de impuestos.`;  });
         alert(mensajeDocumento);
     }
@@ -89,40 +90,205 @@ class DocumentoDetalle{
     }
 }
 
-let productos = [new Producto(1, 'Microfono', 25000, 21), new Producto(2, 'Monitor', 80000, 0), new Producto(3, 'Mouse', 20000, 21), new Producto(4, 'Parlantes', 50000, 27), new Producto(5, 'Teclado', 30000, 10.5)];
+let productos = [new Producto(1, 'Microfono', 25000, 21), new Producto(2, 'Monitor', 80000, 0), new Producto(3, 'Mouse', 20000, 21), new Producto(4, 'Parlantes', 50000, 27), new Producto(5, 'Teclado', 30000, 0)];
 
-// PASAR CLIENTE A DROPDOWN?
-const validarCliente = () => {
+const validarCliente = (msgError) => {
     let cliente = clientElement.value;
-    let msgError = '';
 
-    if (cliente < 100000000 && cliente > 99999999999) msgError = 'El CUIT ingresado es incorrecto. El mismo debe ser mayor o igual a 100000000 y menor o igual a 99999999999';  
+    if (cliente == '') msgError += 'Seleccione Cliente\n';  
     return msgError;
 }
 
 const validarTipoDocumento = (msgError) => {
-    let tipoDocumento = tipoDocumentoElement.getValue();
+    let tipoDocumento = tipoDocumentoElement.value;
 
-    if(tipoDocumento == '' ) msgError = 'Seleccione Tipo de Documento';
+    if(tipoDocumento == '' ) msgError += 'Seleccione Tipo de Documento\n';
     return msgError;
 }
 
 const validarCentroEmisor = (msgError) => {
-    let centroEmisor = centroEmisorElement.getValue();
+    let centroEmisor = centroEmisorElement.value;
 
-    if (centroEmisor == '') msgError = 'Seleccione Centro Emisor';
+    if (centroEmisor == '') msgError += 'Seleccione Centro Emisor\n';
     return msgError;
+}
+
+const validarDetalle = (msgError) => {
+    let cantidad1 = cantidad1Element.value;
+    let producto1 = producto1Element.value;
+    let cantidad2 = cantidad2Element.value;
+    let producto2 = producto2Element.value;
+    let cantidad3 = cantidad3Element.value;
+    let producto3 = producto3Element.value;
+    let cantidad4 = cantidad4Element.value;
+    let producto4 = producto4Element.value;
+    let cantidad5 = cantidad5Element.value;
+    let producto5 = producto5Element.value;
+
+    if (cantidad1 <= 0 && producto1 == "" && cantidad2 <= 0 && producto2 == "" && cantidad3 <= 0 && producto3 == "" && cantidad4 <= 0 && producto4 == "" && cantidad5 <= 0 && producto5 == "") return msgError += 'Ingrese alguna línea del detalle\n';
+    if (cantidad1 <= 0 && producto1 != "") msgError += "Ingrese la cantidad en la primer línea del detalle\n";
+    if (cantidad1 > 0 && producto1 == "") msgError += "Seleccione el producto en la primer línea del detalle\n";
+    if (cantidad2 <= 0 && producto2 != "") msgError += "Ingrese la cantidad en la segunda línea del detalle\n";
+    if (cantidad2 > 0 && producto2 == "") msgError += "Seleccione el producto en la segunda línea del detalle\n";
+    if (cantidad3 <= 0 && producto3 != "") msgError += "Ingrese la cantidad en la tercer línea del detalle\n";
+    if (cantidad3 > 0 && producto3 == "") msgError += "Seleccione el producto en la tercer línea del detalle\n";
+    if (cantidad4 <= 0 && producto4 != "") msgError += "Ingrese la cantidad en la cuarta línea del detalle\n";
+    if (cantidad4 > 0 && producto4 == "") msgError += "Seleccione el producto en la cuarta línea del detalle\n";
+    if (cantidad5 <= 0 && producto5 != "") msgError += "Ingrese la cantidad en la quinta línea del detalle\n";
+    if (cantidad5 > 0 && producto5 == "") msgError += "Seleccione el producto en la quinta línea del detalle\n";
+    return msgError
 }
 
 const validarInputs = () => {
     let msgError = '';
 
-    msgError = validarCliente();
+    msgError = validarCliente(msgError);
     msgError = validarTipoDocumento(msgError);
     msgError = validarCentroEmisor(msgError);
     msgError = validarDetalle(msgError);
+    return msgError;
 }
 
+const mostrarError = (msgError) => {
+    alert(msgError);
+}
+
+const asignarNumero = (tipoDocumento, centroEmisor) => {
+    let documentosFiltrados;
+    let numero;
+    let numeroStr = '00000000';
+    let difLength = 0;
+
+    documentosFiltrados = listaDocumentos.filter( (d) => d.tipo == tipoDocumento && d.centroEmisor == centroEmisor);    // Consigo los documentos del mismo tipo y centro emisor.
+    if (documentosFiltrados.length == 0) return '00000001';
+    documentosFiltrados.sort( (a,b) => b.numero - a.numero); // Ordeno los documentos filtrados de mayor a menor para obtener el más grande fácilmente.
+    numero = parseInt(documentosFiltrados[0].numero) + 1;
+    numeroStr += numero;
+    difLength = numeroStr.length - 8;
+    numeroStr = numeroStr.substring(difLength)
+    return numeroStr;
+}
+
+const crearDetalle = () => {
+    let cantidad1 = cantidad1Element.value;
+    let producto1 = producto1Element.value;
+    let documentoDetalle1;
+    let cantidad2 = cantidad2Element.value;
+    let producto2 = producto2Element.value;
+    let documentoDetalle2;
+    let cantidad3 = cantidad3Element.value;
+    let producto3 = producto3Element.value;
+    let documentoDetalle3;
+    let cantidad4 = cantidad4Element.value;
+    let producto4 = producto4Element.value;
+    let documentoDetalle4;
+    let cantidad5 = cantidad5Element.value;
+    let producto5 = producto5Element.value; 
+    let documentoDetalle5;
+    let listaDocumentoDetalle = [];
+
+    if (cantidad1 > 0 && producto1 != ""){
+        documentoDetalle1 = new DocumentoDetalle(productos[producto1], cantidad1);
+        listaDocumentoDetalle.push(documentoDetalle1);
+    }
+    if (cantidad2 > 0 && producto2 != ""){
+        documentoDetalle2 = new DocumentoDetalle(productos[producto2], cantidad2);
+        listaDocumentoDetalle.push(documentoDetalle2);
+    }
+    if (cantidad3 > 0 && producto3 != ""){
+        documentoDetalle3 = new DocumentoDetalle(productos[producto3], cantidad3);
+        listaDocumentoDetalle.push(documentoDetalle3);
+    }
+    if (cantidad4 > 0 && producto4 != ""){
+        documentoDetalle4 = new DocumentoDetalle(productos[producto4], cantidad4);
+        listaDocumentoDetalle.push(documentoDetalle4);
+    }
+    if (cantidad5 > 0 && producto5 != ""){
+        documentoDetalle5 = new DocumentoDetalle(productos[producto5], cantidad5);
+        listaDocumentoDetalle.push(documentoDetalle5);
+    }
+    return listaDocumentoDetalle;
+}
+
+const mostrarListadoDocumentos = () => {
+    documentoRowElement.innerHTML = '';
+    listaDocumentos.forEach( (doc) => { 
+        documentoRowElement.innerHTML += `
+            <div class="row">
+                <div class="col-xl-2 offset-md-1">
+                    <div class="containerInput alignCenter">
+                        <p class="textGeneric">${doc.tipo}</p>
+                    </div>
+                </div>
+                <div class="col-xl-2">
+                    <div class="containerInput alignCenter">
+                        <p class="textGeneric">${doc.centroEmisor}</p>
+                    </div>
+                </div>
+                <div class="col-xl-2">
+                    <div class="containerInput alignCenter">
+                        <p class="textGeneric">${doc.numero}</p>
+                    </div>
+                </div>
+                <div class="col-xl-2">
+                    <div class="containerInput alignCenter">
+                        <p class="textGeneric">${doc.cliente}</p>
+                    </div>
+                </div>
+                <div class="col-xl-2">
+                    <div class="containerInput alignCenter">
+                        <p class="textGeneric">${doc.total}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+const reinciarForm = () => {
+    clientElement.value = '';
+    tipoDocumentoElement.value = '';
+    centroEmisorElement.value = '';
+    numeroElement.innerHTML = '00000000';
+    cantidad1Element.value = 0;
+    producto1Element.value = '';
+    precio1Element.innerHTML = 0;
+    impuesto1Element.innerHTML = 0;
+    subtotal1Element.innerHTML = 0;
+    cantidad2Element.value = 0;
+    producto2Element.value = '';
+    precio2Element.innerHTML = 0;
+    impuesto2Element.innerHTML = 0;
+    subtotal2Element.innerHTML = 0;
+    cantidad3Element.value = 0;
+    producto3Element.value = '';
+    precio3Element.innerHTML = 0;
+    impuesto3Element.innerHTML = 0;
+    subtotal3Element.innerHTML = 0;
+    cantidad4Element.value = 0;
+    producto4Element.value = '';
+    precio4Element.innerHTML = 0;
+    impuesto4Element.innerHTML = 0;
+    subtotal4Element.innerHTML = 0;
+    cantidad5Element.value = 0;
+    producto5Element.value = '';
+    precio5Element.innerHTML = 0;
+    impuesto5Element.innerHTML = 0;
+    subtotal5Element.innerHTML = 0;
+    totalElement.innerHTML = 0;
+}
+
+const crearDocumento = () => {
+    let cliente = clientElement.value;
+    let tipoDocumento = tipoDocumentoElement.value;
+    let centroEmisor = centroEmisorElement.value;
+    let numero = numeroElement.innerHTML;
+    let listaDocumentoDetalle = crearDetalle();
+    let documento = new Documento(cliente, tipoDocumento, centroEmisor, numero, listaDocumentoDetalle);
+    listaDocumentos.push(documento); 
+    mostrarListadoDocumentos();
+    reinciarForm(); 
+}
 
 const gestionarCreacionDocumento = () => {
     let msgError = '';
@@ -131,186 +297,184 @@ const gestionarCreacionDocumento = () => {
     msgError == ''? crearDocumento() : mostrarError(msgError);
 }
 
-confirmarElement.addEventListener("click", gestionarCreacionDocumento);
+const gestionarNumero = () => {
+    let tipoDocumentoInput;
+    let centroEmisorInput;
+    let numero;
 
-/*
-
-const crearDocumento = () => {    
-    let cuit;
-    let tipoDocumento;
-    let centroEmisor;
-    let numeroDocumento;
-    let listaDocumentoDetalle;
-    let documento;
-
-    cuit = ingresarCuit();
-    tipoDocumento = seleccionarTipoDocumento();
-    centroEmisor = seleccionarCentroEmisor();
-    numeroDocumento =  asignarNumero(centroEmisor, tipoDocumento);
-    listaDocumentoDetalle = cargarDetalle();
-    documento = new Documento(cuit, tipoDocumento, centroEmisor, numeroDocumento, listaDocumentoDetalle);
-    listaDocumentos.push(documento);  
-    documento.mostrarMensajeDocumentoCreado();
-}
-
-const ingresarCuit = () => {
-    let inputCuit;
-    let cuit;
-
-    inputCuit = prompt('Ingrese el CUIT al que desea emitirle el Documento.');
-    cuit = validarInputCuit(inputCuit);
-    return cuit;
-}
-
-const validarInputCuit = (inputCuit) => {
-    while(inputCuit < 100000000 && inputCuit > 99999999999){
-        inputCuit = prompt('El CUIT ingresado es incorrecto. El mismo debe ser mayor o igual a 100000000 y menor o igual a 99999999999');
-    }  
-    return inputCuit;
-}
-
-const seleccionarTipoDocumento = () => {
-    let inputTipoDocumento;
-    let tipoDocumento;
-
-    inputTipoDocumento = prompt('Seleccione el Tipo de Documento que desea crear! Ingrese:\n1 - Factura.\n2 - Nota de Crédito.\n3 - Nota de Débito.');
-    tipoDocumento = validarInputTipoDocumento(inputTipoDocumento);
-    return tipoDocumento;
-}
-
-const validarInputTipoDocumento = (inputTipoDocumento) => {
-    let tipoDocumento;
-
-    while(!(inputTipoDocumento == '1' || inputTipoDocumento == '2' || inputTipoDocumento == '3')){
-        inputTipoDocumento = prompt('Opción inválida. Ingrese:\n1 - Factura.\n2 - Nota de Crédito.\n3 - Nota de Débito.');
-    }  
-    if (inputTipoDocumento == '1') tipoDocumento = 'Factura';
-    if (inputTipoDocumento == '2') tipoDocumento = 'Nota de Crédito';
-    if (inputTipoDocumento == '3') tipoDocumento = 'Nota de Débito';
-    return tipoDocumento;
-}
-
-const seleccionarCentroEmisor = () => {
-    let inputCentroEmisor;
-    let centroEmisor;
-
-    inputCentroEmisor = prompt('Seleccione el Centro Emisor! Ingrese:\n1 - 00001.\n2 - 00002.\n3 - 00003.\n4 - 00004.\n5 - 00005.');
-    centroEmisor = validarInputCentroEmisor(inputCentroEmisor);
-    return centroEmisor;
-}
-
-const validarInputCentroEmisor = (inputCentroEmisor) => {
-    let centroEmisor;
-
-    while(!(inputCentroEmisor == '1' || inputCentroEmisor == '2' || inputCentroEmisor == '3' || inputCentroEmisor == '4' || inputCentroEmisor == '5')){
-        inputCentroEmisor = prompt('Opción inválida. Ingrese:\n1 - 00001.\n2 - 00002.\n3 - 00003.\n4 - 00004.\n5 - 00005.');
-    }  
-    if (inputCentroEmisor == '1') centroEmisor = '00001';
-    if (inputCentroEmisor == '2') centroEmisor = '00002';
-    if (inputCentroEmisor == '3') centroEmisor = '00003';
-    if (inputCentroEmisor == '4') centroEmisor = '00004';
-    if (inputCentroEmisor == '5') centroEmisor = '00005';
-    return centroEmisor;
-}
-
-const asignarNumero = (centroEmisor, tipoDocumento) => {
-    let documentosFiltrados;
-    let numeroDocumento;
-
-    documentosFiltrados = listaDocumentos.filter( (d) => d.tipo == tipoDocumento && d.centroEmisor == centroEmisor);    // Consigo los documentos del mismo tipo y centro emisor.
-    if (documentosFiltrados.length == 0) return 1;
-    documentosFiltrados.sort( (a,b) => b.numero - a.numero); // Ordeno los documentos filtrados de mayor a menor para obtener el más grande fácilmente.
-    numeroDocumento = documentosFiltrados[0].numero + 1;
-    return numeroDocumento;
-}
-
-const cargarDetalle = () => {
-    let indexProducto;
-    let cantidad;
-    let listaDocumentoDetalle = [];
-    let documentoDetalle;
-    let iteradorDetalle = true;
-    let inputOpcionDetalle;
-    let opcionDetalle;
-
-    while (iteradorDetalle) {
-        indexProducto = seleccionarProducto();
-        indexProducto--;
-        cantidad = ingresarCantidad();
-        documentoDetalle = new DocumentoDetalle(productos[indexProducto], cantidad);
-        listaDocumentoDetalle.push(documentoDetalle);
-
-        inputOpcionDetalle = prompt('Desea cargar otra línea de detalle al documento? Ingrese "S" para sí o "N" para no.');
-        opcionDetalle = validarInputOpcionDetalle(inputOpcionDetalle);
-
-        if(opcionDetalle.toUpperCase() == 'N') iteradorDetalle = false;
+    tipoDocumentoInput = tipoDocumentoElement.value;
+    centroEmisorInput = centroEmisorElement.value;
+    
+    if(tipoDocumentoInput != '' && centroEmisorInput != ''){
+        numero = asignarNumero(tipoDocumentoInput, centroEmisorInput);   
+        numeroElement.innerHTML = numero;
+    } else {
+        numeroElement.innerHTML = '00000000';
     }
-    return listaDocumentoDetalle;
 }
 
-const validarInputOpcionDetalle = (inputOpcionDetalle) => {
-    while(!(inputOpcionDetalle.toUpperCase() == 'S' || inputOpcionDetalle.toUpperCase() == 'N')){
-        inputOpcionDetalle = prompt('Opción inválida. Ingrese "S" para sí o "N" para no.');
-    }  
-    return inputOpcionDetalle;
+const obtenerProducto = (id) => {
+    let productosFiltrados;
+
+    productosFiltrados = productos.filter( (p) => p.id == id);
+    return productosFiltrados[0];
 }
 
-const seleccionarProducto = () => {
-    let mensajeInputProducto;
-    let inputProducto;
+const gestionarLinea1 = () => {
+    let cantidadInput;
+    let productoInput;
+    let subtotalInput;
+    let totalInput;
+    let total;
     let producto;
 
-    mensajeInputProducto = 'Seleccione el Producto que desea facturar! Ingrese: ';
-    productos.forEach( (p) => {  mensajeInputProducto += `\n${p.id} - ${p.nombre} por $${p.precio} con un ${p.impuesto}% de impuestos.`;  });
+    cantidadInput = cantidad1Element.value;
+    productoInput = producto1Element.value;
+    subtotalInput = parseInt(subtotal1Element.innerHTML);
+    totalInput = parseInt(totalElement.innerHTML);
+    total = totalInput - subtotalInput;
 
-    inputProducto = prompt(mensajeInputProducto);
-    producto = validarInputProducto(inputProducto);
-    return producto;
-}
-
-const validarInputProducto = (inputProducto) => {
-    let mensajeInputProducto;
-
-    mensajeInputProducto = 'Opción inválida! Ingrese: ';
-    productos.forEach( (p) => {  mensajeInputProducto += `\n${p.id} - ${p.nombre} por $${p.precio} con un ${p.impuesto}% de impuestos.`;  });
-    while(inputProducto < 1 || inputProducto > 5){
-        inputProducto = prompt(mensajeInputProducto);
-    }  
-    return inputProducto;
-}
-
-const ingresarCantidad = () => {
-    let inputCantidad;
-    let cantidad;
-
-    inputCantidad = prompt('Ingrese la cantidad del producto.');
-    cantidad = validarInputCantidad(inputCantidad);
-    return cantidad;
-}
-
-const validarInputCantidad  = (inputCantidad) => {
-    while(inputCantidad < 1){
-        inputCantidad = prompt('La cantidad debe ser mayor que 0, ingrésela nuevamente.');
-    }  
-    return inputCantidad;
-}
-
-const mostrarListaDocumentos = () => {
-    let listaDocumentosStr = '';
-
-    if(listaDocumentos.length == 0){
-        alert("Todavía no hay documentos creados.");
-        return;
+    if(cantidadInput > 0 && productoInput != ''){
+        producto = obtenerProducto(productoInput);
+        precio1Element.innerHTML = producto.precio;
+        impuesto1Element.innerHTML = producto.impuesto;
+        subtotal1Element.innerHTML = cantidadInput * producto.precio * (1 + producto.impuesto / 100);
+    } else {
+        precio1Element.innerHTML = 0;
+        impuesto1Element.innerHTML = 0;
+        subtotal1Element.innerHTML = 0;
     }
-    listaDocumentosStr += 'Se crearon los siguientes documentos: ';
-    listaDocumentos.forEach( (doc) => { listaDocumentosStr +=  '\n'+ doc.mostrarDocumento() });
-    alert(listaDocumentosStr);
+
+    total += parseInt(subtotal1Element.innerHTML);
+    totalElement.innerHTML = total;
 }
 
-// Bucle principal
-while (iterador){
-    opcionMenu = gestionarMenu();
-    if (opcionMenu == 1) crearDocumento();
-    if (opcionMenu == 2) mostrarListaDocumentos();
-    if (opcionMenu == 3) iterador = false;
-}*/
+const gestionarLinea2 = () => {
+    let cantidadInput;
+    let productoInput;
+    let subtotalInput;
+    let totalInput;
+    let total;
+    let producto;
+
+    cantidadInput = cantidad2Element.value;
+    productoInput = producto2Element.value;
+    subtotalInput = parseInt(subtotal2Element.innerHTML);
+    totalInput = parseInt(totalElement.innerHTML);
+    total = totalInput - subtotalInput;
+    
+    if(cantidadInput > 0 && productoInput != ''){
+        producto = obtenerProducto(productoInput);
+        precio2Element.innerHTML = producto.precio;
+        impuesto2Element.innerHTML = producto.impuesto;
+        subtotal2Element.innerHTML = cantidadInput * producto.precio * (1 + producto.impuesto / 100);
+    } else {
+        precio2Element.innerHTML = 0;
+        impuesto2Element.innerHTML = 0;
+        subtotal2Element.innerHTML = 0;
+    }
+
+    total += parseInt(subtotal2Element.innerHTML);
+    totalElement.innerHTML = total;
+}
+
+const gestionarLinea3 = () => {
+    let cantidadInput;
+    let productoInput;
+    let subtotalInput;
+    let totalInput;
+    let total;
+    let producto;
+
+    cantidadInput = cantidad3Element.value;
+    productoInput = producto3Element.value;
+    subtotalInput = parseInt(subtotal3Element.innerHTML);
+    totalInput = parseInt(totalElement.innerHTML);
+    total = totalInput - subtotalInput;
+    
+    if(cantidadInput > 0 && productoInput != ''){
+        producto = obtenerProducto(productoInput);
+        precio3Element.innerHTML = producto.precio;
+        impuesto3Element.innerHTML = producto.impuesto;
+        subtotal3Element.innerHTML = cantidadInput * producto.precio * (1 + producto.impuesto / 100);
+    } else {
+        precio3Element.innerHTML = 0;
+        impuesto3Element.innerHTML = 0;
+        subtotal3Element.innerHTML = 0;
+    }
+
+    total += parseInt(subtotal3Element.innerHTML);
+    totalElement.innerHTML = total;
+}
+
+const gestionarLinea4 = () => {
+    let cantidadInput;
+    let productoInput;
+    let subtotalInput;
+    let totalInput;
+    let total;
+    let producto;
+
+    cantidadInput = cantidad4Element.value;
+    productoInput = producto4Element.value;
+    subtotalInput = parseInt(subtotal4Element.innerHTML);
+    totalInput = parseInt(totalElement.innerHTML);
+    total = totalInput - subtotalInput;
+    
+    if(cantidadInput > 0 && productoInput != ''){
+        producto = obtenerProducto(productoInput);
+        precio4Element.innerHTML = producto.precio;
+        impuesto4Element.innerHTML = producto.impuesto;
+        subtotal4Element.innerHTML = cantidadInput * producto.precio * (1 + producto.impuesto / 100);
+    } else {
+        precio4Element.innerHTML = 0;
+        impuesto4Element.innerHTML = 0;
+        subtotal4Element.innerHTML = 0;
+    }
+
+    total += parseInt(subtotal4Element.innerHTML);
+    totalElement.innerHTML = total;
+}
+
+const gestionarLinea5 = () => {
+    let cantidadInput;
+    let productoInput;
+    let subtotalInput;
+    let totalInput;
+    let total;
+    let producto;
+
+    cantidadInput = cantidad5Element.value;
+    productoInput = producto5Element.value;
+    subtotalInput = parseInt(subtotal5Element.innerHTML);
+    totalInput = parseInt(totalElement.innerHTML);
+    total = totalInput - subtotalInput;
+
+    if(cantidadInput > 0 && productoInput != ''){
+        producto = obtenerProducto(productoInput);
+        precio5Element.innerHTML = producto.precio;
+        impuesto5Element.innerHTML = producto.impuesto;
+        subtotal5Element.innerHTML = cantidadInput * producto.precio * (1 + producto.impuesto / 100);
+    } else {
+        precio5Element.innerHTML = 0;
+        impuesto5Element.innerHTML = 0;
+        subtotal5Element.innerHTML = 0;
+    }
+
+    total += parseInt(subtotal5Element.innerHTML);
+    totalElement.innerHTML = total;
+}
+
+confirmarElement.addEventListener("click", gestionarCreacionDocumento);
+tipoDocumentoElement.addEventListener("change", gestionarNumero);
+centroEmisorElement.addEventListener("change", gestionarNumero);
+cantidad1Element.addEventListener("focusout", gestionarLinea1);
+producto1Element.addEventListener("change", gestionarLinea1);
+cantidad2Element.addEventListener("focusout", gestionarLinea2);
+producto2Element.addEventListener("change", gestionarLinea2);
+cantidad3Element.addEventListener("focusout", gestionarLinea3);
+producto3Element.addEventListener("change", gestionarLinea3);
+cantidad4Element.addEventListener("focusout", gestionarLinea4);
+producto4Element.addEventListener("change", gestionarLinea4);
+cantidad5Element.addEventListener("focusout", gestionarLinea5);
+producto5Element.addEventListener("change", gestionarLinea5);
